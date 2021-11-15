@@ -1,5 +1,20 @@
 # Clínica Médica
 
+## Estrutura dos diretórios
+
+      .
+      ├── rest-service
+      │   ├── index.ts
+      │   └── ...    
+      ├── web-interface             # SPA interface
+      │   ├── index.ts
+      │   ├── README.MD             # Getting started guide
+      │   ├── src             
+      │   └── ...                 
+      └── ...
+
+
+
 ## Funcionalidades da aplicação
 - [ ] A escolha da linguagem de programação é livre (python, dart, java, php, javascript, entre outras), mas o BD deve ser o MySQL.
 
