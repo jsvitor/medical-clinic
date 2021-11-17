@@ -43,7 +43,9 @@
 
 - [ ] Configuração do ambiente de desenvolvimento
 - [ ] Criar as rotas para médico
+- [ ] Fazer a conexão com o banco de dados mysql
 - [ ] Documentar
+
 
 ## Medico
 
