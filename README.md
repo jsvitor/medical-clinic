@@ -31,6 +31,8 @@
 
 ## Tarefas
 
+### Gravar o vídeo mostrando o funcionamento da aplicação
+
 ### Interface
 - [ ] Protótipo no Figma
 
