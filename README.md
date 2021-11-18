@@ -14,6 +14,9 @@
       └── ...
 
 
+### Modelo Entidade Relacionamento Estendido | MySQL
+![esquema clínica médica](https://raw.githubusercontent.com/jsvitor/iaad-bsi-ufrpe/main/semana%2005-06/clinica_medica_diagram.png)
+
 
 ## Funcionalidades da aplicação
 - [ ] A escolha da linguagem de programação é livre (python, dart, java, php, javascript, entre outras), mas o BD deve ser o MySQL.
@@ -90,20 +93,15 @@
 
 ```DELETE``` ```/medico/:codmed```
 
-### Clinica
+## Clinica
 
 
 
 
-### Paciente
+## Paciente
 
-### AgendaConsulta
+## AgendaConsulta
 
-### ClinicaMedico
-
-
-
-### Modelo Entidade Relacionamento Estendido | MySQL
-![esquema clínica médica](https://raw.githubusercontent.com/jsvitor/iaad-bsi-ufrpe/main/semana%2005-06/clinica_medica_diagram.png)
+## ClinicaMedico
 
 
