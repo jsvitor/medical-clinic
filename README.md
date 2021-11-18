@@ -29,6 +29,34 @@
 - [ ] O sistema deve dispor de interface gráfica, seja web, mobile ou desktop.
 
 
+## Tarefas
+
+### Gravar o vídeo mostrando o funcionamento da aplicação
+
+### Interface
+- [ ] Protótipo no Figma
+
+### Web service
+- [ ] CRUD de medico
+- [ ] CRUD de clinica
+- [ ] CRUD de paciente
+- [ ] CRUD de agendaConsulta
+- [ ] CRUD clinicamedico
+
+- [ ] Configuração do ambiente de desenvolvimento
+- [ ] Criar as rotas para médico
+- [ ] Fazer a conexão com o banco de dados mysql
+- [ ] Documentar
+
+
+## Medico
+
+GET - lista os médicos
+``http:localhost:3333/medico``
+
+
+
+
 ### Modelo Entidade Relacionamento Estendido | MySQL
 ![esquema clínica médica](https://raw.githubusercontent.com/jsvitor/iaad-bsi-ufrpe/main/semana%2005-06/clinica_medica_diagram.png)
 
