@@ -14,6 +14,9 @@
       └── ...
 
 
+### Modelo Entidade Relacionamento Estendido | MySQL
+![esquema clínica médica](https://raw.githubusercontent.com/jsvitor/iaad-bsi-ufrpe/main/semana%2005-06/clinica_medica_diagram.png)
+
 
 ## Funcionalidades da aplicação
 - [ ] A escolha da linguagem de programação é livre (python, dart, java, php, javascript, entre outras), mas o BD deve ser o MySQL.
@@ -51,13 +54,54 @@
 
 ## Medico
 
-GET - lista os médicos
-``http:localhost:3333/medico``
+### Listar os 10 primeiros registros médicos
+
+````GET```` ``/medico``
+
+
+### Criar um registro de médico
+
+```POST``` ``/medico``
+
+``BODY``
+
+````json
+{
+      "name": "Arlindo",
+      "gender": "M",
+      "phone": "81995374530",
+      "email": "arlindo@hr.com",
+      "codEspec": 3001
+}
+````
+
+
+### Alterar um registro de médico usando o CodMed
+
+```PUT``` ``/medico/:codmed``
+
+#### Body
+
+```json
+{
+      "name": "José"
+}
+```
+
+
+### Deletar um registro de Médico
+
+```DELETE``` ```/medico/:codmed```
+
+## Clinica
 
 
 
 
-### Modelo Entidade Relacionamento Estendido | MySQL
-![esquema clínica médica](https://raw.githubusercontent.com/jsvitor/iaad-bsi-ufrpe/main/semana%2005-06/clinica_medica_diagram.png)
+## Paciente
+
+## AgendaConsulta
+
+## ClinicaMedico
 
 
