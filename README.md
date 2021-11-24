@@ -4,8 +4,26 @@
 
       .
       ├── rest-service
-      │   ├── index.ts
-      │   └── ...    
+      │   ├── src
+	│   │	   ├── config
+	│   │	   ├── controllers
+      │   │    │   ├── doctorControllers
+      │   │    │   ├── 
+      │   │    │   └── index.ts
+	│   │	   ├── routes          # rotas da aplicação
+      │   │    │   ├── doctor.routes.ts
+      │   │    │   ├── ...
+      │   │    │   └── index.ts
+      |   │	   └── server.ts
+      │   ├── .editorconfig
+      │   ├── .eslintignore
+      │   ├── .eslintrc.json
+      │   ├── .gitattributes
+      │   ├── .gitignore
+      │   ├── README.md
+      │   ├── .package.json
+      │   ├── tsconfig.json
+      │   └── yarn.lock
       ├── web-interface             # SPA interface
       │   ├── index.ts
       │   ├── README.MD             # Getting started guide
