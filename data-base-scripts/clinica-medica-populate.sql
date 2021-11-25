@@ -1,6 +1,9 @@
 /*
  * INSERÇÕES NA BASE DE DADOS
  */
+
+use clinica_medica;
+
 -- inserções na relação Especialidades
 insert into Especialidade(CodEspec, NomeEspec, Descricao) values (0001, 'Clínico Geral', 'Consultas, exames, prescricoes.');
 insert into Especialidade(CodEspec, NomeEspec, Descricao) values (0002, 'Pediatria', 'Assistência à criança e ao adolescente.');
