@@ -115,7 +115,7 @@
 ````
 
 
-### Alterar um registro de médico usando o CodEspec
+### Alterar um registro de Especialidade usando o CodEspec
 
 ```PUT``` ``/specialty``
 
