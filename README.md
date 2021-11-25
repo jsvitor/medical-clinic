@@ -93,15 +93,57 @@
 
 ```DELETE``` ```/medico/:codmed```
 
-## Clinica
+## Especialidade
+
+### Listar os 10 primeiros registros  de Especialidade
+
+````GET```` ``/specialty``
 
 
+### Criar um registro de Especialidade
+
+```POST``` ``/specialty``
+
+``BODY``
+
+````json
+{
+	"CodEspec":"005410",
+	"NomeEspec": "Oftalmologia",
+	"Descricao": "Epecialidade que cuida da saude dos olhos."
+}
+````
 
 
-## Paciente
+### Alterar um registro de médico usando o CodEspec
 
-## AgendaConsulta
+```PUT``` ``/specialty``
 
-## ClinicaMedico
+#### Body
 
+```json
+{
+	"CodEspec":"06791",
+	"column": "NomeEspec",
+	"value": "Pediatria1"
+}
+```
+
+
+### Deletar um registro de Especialidade
+
+```DELETE``` ```/specialty```
+
+#### Body
+
+```json
+{
+	"CodEspec":"06791"
+}
+```
+
+
+### 
+
+## 
 

@@ -3,35 +3,27 @@ import { NextFunction, Request, Response } from "express";
 import logging from "../../config/logging";
 import { Connect, Update } from "../../config/mysql";
 
-const NAMESPACE = "clinic";
+const NAMESPACE = "specialty";
 
-const updateClinic = async (
+const updateSpecialty = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  logging.info(NAMESPACE, "Updtating clinic.");
+  logging.info(NAMESPACE, "Updtating specialty.");
 
-  interface IClinic {
-    CodCli: string;
-    name?: string;
-    address?: string;
-    phone?: string;
-    email?: string;
-  }
-
-  const { CodCli, name, address, phone, email }: IClinic = req.body;
+  const { CodEspec, column, value } = req.body;
 
   /* const { CodMed } = req.params; */
 
-  const query = `UPDATE clinica SET NomeCli = ?, endereco = ?, Telefone = ?, Email = ? WHERE CodCli = ?`;
-  const columns = [name, address, phone, email, CodCli];
+  const query = `UPDATE especialidade SET ${column} = "${value}" WHERE CodEspec = ${CodEspec}`;
+  const columns = [column];
 
   Connect()
     .then((connection) => {
       Update(connection, query, columns)
         .then((result) => {
-          logging.info(NAMESPACE, "Clinic updated: ", result);
+          logging.info(NAMESPACE, "Specialty updated: ", result);
 
           return res.status(200).json({
             result,
@@ -60,4 +52,4 @@ const updateClinic = async (
     });
 };
 
-export { updateClinic };
+export { updateSpecialty };

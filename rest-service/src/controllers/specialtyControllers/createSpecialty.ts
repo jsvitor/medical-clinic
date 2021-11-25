@@ -1,37 +1,26 @@
-import { NextFunction, Request, Response } from "express";
+import e, { NextFunction, Request, Response } from "express";
 
 import logging from "../../config/logging";
-import { Connect, Update } from "../../config/mysql";
+import { Connect, Query } from "../../config/mysql";
 
-const NAMESPACE = "clinic";
+const NAMESPACE = "specialty";
 
-const updateClinic = async (
+const createSpecialty = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  logging.info(NAMESPACE, "Updtating clinic.");
+  logging.info(NAMESPACE, "Inserting Specialty");
 
-  interface IClinic {
-    CodCli: string;
-    name?: string;
-    address?: string;
-    phone?: string;
-    email?: string;
-  }
+  const { CodEspec, NomeEspec, Descricao } = req.body;
 
-  const { CodCli, name, address, phone, email }: IClinic = req.body;
-
-  /* const { CodMed } = req.params; */
-
-  const query = `UPDATE clinica SET NomeCli = ?, endereco = ?, Telefone = ?, Email = ? WHERE CodCli = ?`;
-  const columns = [name, address, phone, email, CodCli];
+  const query = `INSERT INTO especialidade (CodEspec, NomeEspec, Descricao) VALUES ("${CodEspec}", "${NomeEspec}", "${Descricao}")`;
 
   Connect()
     .then((connection) => {
-      Update(connection, query, columns)
+      Query(connection, query)
         .then((result) => {
-          logging.info(NAMESPACE, "Clinic updated: ", result);
+          logging.info(NAMESPACE, "Specialty created: ", result);
 
           return res.status(200).json({
             result,
@@ -60,4 +49,4 @@ const updateClinic = async (
     });
 };
 
-export { updateClinic };
+export { createSpecialty };

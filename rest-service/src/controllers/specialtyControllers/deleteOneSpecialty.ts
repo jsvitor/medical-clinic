@@ -1,33 +1,33 @@
 import { NextFunction, Request, Response } from "express";
 
 import logging from "../../config/logging";
-import { Connect, Query } from "../../config/mysql";
+import { Connect, Query, Update } from "../../config/mysql";
 
-const NAMESPACE = "clinic";
+const NAMESPACE = "specialty";
 
-const listAllClinics = async (
+const deleteOneSpecialty = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  logging.info(NAMESPACE, "Getting all clinics.");
+  logging.info(NAMESPACE, "Deleting one specialty.");
 
-  const query = "SELECT * FROM clinicas";
+  const { CodEspec } = req.body;
+
+  const query = `DELETE FROM especialidade WHERE CodEspec = ${CodEspec}`;
 
   Connect()
     .then((connection) => {
       Query(connection, query)
         .then((results) => {
-          logging.info(NAMESPACE, "Retrieved clinics: ", results);
+          logging.info(NAMESPACE, "Deleted specialty: ", results);
 
-          return res.status(200).json({
-            results,
-          });
+          return res.status(200).send();
         })
         .catch((error) => {
           logging.error(NAMESPACE, error.message, error);
 
-          return res.status(200).json({
+          return res.status(404).json({
             message: error.message,
             error,
           });
@@ -40,11 +40,11 @@ const listAllClinics = async (
     .catch((error) => {
       logging.error(NAMESPACE, error.message, error);
 
-      return res.status(200).json({
+      return res.status(404).json({
         message: error.message,
         error,
       });
     });
 };
 
-export { listAllClinics };
+export { deleteOneSpecialty };
