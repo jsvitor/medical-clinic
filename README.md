@@ -1,10 +1,12 @@
 # Sistema Web Clínica Médica
 
-> Este sistema foi desenvolvido para posterior submissão avaliativa da disciplina de Introdução ao Armazenamento e Análise de Dados (IAAD) da Universidade Federal Rural de Pernambuco (UFRPE).
+> Este sistema foi desenvolvido para avaliação da disciplina de Introdução ao Armazenamento e Análise de Dados (IAAD) da Universidade Federal Rural de Pernambuco (UFRPE).
 > O processo de desenvolvimento foi composto lançou mão de ferramentas de organização de projetos, teorias de arquitetura de software e conhecimentos de sistemas de banco de dados.
 
 ## Sobre o projeto
 > Este repositório conta com o script SQL para criação e população do esquema relacional do banco de dados Clínica Médica, assim como o código fonte da API para interação com o banco de dados
+
+### Colaboradores
 
 ### Ferramentas usadas
 * VSCODE
