@@ -12,9 +12,9 @@ const createClinic = async (
 ) => {
   logging.info(NAMESPACE, "Inserting Clinic");
 
-  const { CodCli, NomeCli, endereco, Telefone, E_mail } = req.body;
+  const { CodCli, NomeCli, Endereco, Telefone, E_mail } = req.body;
 
-  const query = `INSERT INTO clinicas (CodCli, NomeCli, endereco, Telefone, E_mail) VALUES ("${CodCli}", "${NomeCli}", "${endereco}", "${Telefone}", "${E_mail}")`;
+  const query = `INSERT INTO clinica (CodCli, NomeCli, Endereco, Telefone, E_mail) VALUES ("${CodCli}", "${NomeCli}", "${Endereco}", "${Telefone}", "${E_mail}")`;
 
   Connect()
     .then((connection) => {

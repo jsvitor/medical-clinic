@@ -12,7 +12,7 @@ const listAllClinics = async (
 ) => {
   logging.info(NAMESPACE, "Getting all clinics.");
 
-  const query = "SELECT * FROM clinicas";
+  const query = "SELECT * FROM clinica";
 
   Connect()
     .then((connection) => {
