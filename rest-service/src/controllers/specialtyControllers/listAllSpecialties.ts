@@ -12,7 +12,7 @@ const listAllSpecialties = async (
 ) => {
   logging.info(NAMESPACE, "Getting all specialties.");
 
-  const query = "SELECT * FROM especialidade";
+  const query = "SELECT * FROM Especialidade";
 
   Connect()
     .then((connection) => {
