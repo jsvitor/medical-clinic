@@ -43,6 +43,10 @@ const updateSpecialty = async (
 
   query += `${update} WHERE CodEspec = ${codespec}`;
 
+  const query = `UPDATE Especialidade SET ${column} = "${value}" WHERE CodEspec = ${CodEspec}`;
+  const columns = [column];
+
+
   Connect()
     .then((connection) => {
       Query(connection, query)

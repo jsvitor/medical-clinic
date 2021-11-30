@@ -20,7 +20,11 @@ const listClinicBySpecialty = async (
     .then((connection) => {
       Query(connection, query)
         .then((result) => {
-          logging.info(NAMESPACE, "Every clinic wich have this specialty: ", result);
+          logging.info(
+            NAMESPACE,
+            "Every clinic wich have this specialty: ",
+            result
+          );
 
           return res.status(200).json({
             result,
