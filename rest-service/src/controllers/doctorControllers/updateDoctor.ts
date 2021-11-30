@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import logging from "../../config/logging";
-import { Connect, Update } from "../../config/mysql";
+import { Connect, Query } from "../../config/mysql";
 
 const NAMESPACE = "doctor";
 
@@ -13,24 +13,45 @@ const updateDoctor = async (
   logging.info(NAMESPACE, "Updtating doctor.");
 
   interface IDoctor {
-    codMed: number;
-    name?: string;
-    gender?: string;
-    phone?: string;
-    email?: string;
-    codEspec?: number;
+    NomeMed?: string;
+    Genero?: string;
+    Telefone?: string;
+    Email?: string;
+    CodEspec?: number;
   }
 
-  const { codMed, name, gender, phone, email, codEspec }: IDoctor = req.body;
+  const { name, gender, phone, email, codEspec } = req.body;
 
-  /* const { CodMed } = req.params; */
+  const { codmed } = req.headers;
 
-  const query = `UPDATE Medico SET NomeMed = ?, Genero = ?, Telefone = ?, Email = ?, CodEspec = ? WHERE CodMed = ?`;
-  const columns = [name, gender, phone, email, codEspec, codMed];
+  // alterar apenas os dados informados no corpo da requisição
+  const values: IDoctor = {
+    NomeMed: name,
+    Genero: gender,
+    Telefone: phone,
+    Email: email,
+    CodEspec: codEspec,
+  };
+
+  let query = `UPDATE Medico SET `.toString();
+  console.log(query);
+
+  let update = "";
+
+  Object.entries(values).forEach((item) => {
+    if (item[1] !== undefined && item[0] !== "CodEspec") {
+      console.log(item);
+      update += `${item[0]} = "${item[1]}", `;
+    } else if (item[1] !== undefined && item[0] === "CodEspec") {
+      update += `${item[0]} = ${item[1]} `;
+    }
+  });
+
+  query += `${update} WHERE CodMed = ${codmed}`;
 
   Connect()
     .then((connection) => {
-      Update(connection, query, columns)
+      Query(connection, query)
         .then((result) => {
           logging.info(NAMESPACE, "Medico created: ", result);
 
