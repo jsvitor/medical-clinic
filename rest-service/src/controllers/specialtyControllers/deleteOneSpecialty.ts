@@ -14,7 +14,7 @@ const deleteOneSpecialty = async (
 
   const { CodEspec } = req.body;
 
-  const query = `DELETE FROM especialidade WHERE CodEspec = ${CodEspec}`;
+  const query = `DELETE FROM Especialidade WHERE CodEspec = ${CodEspec}`;
 
   Connect()
     .then((connection) => {

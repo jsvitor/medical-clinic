@@ -14,7 +14,7 @@ const createSpecialty = async (
 
   const { CodEspec, NomeEspec, Descricao } = req.body;
 
-  const query = `INSERT INTO especialidade (CodEspec, NomeEspec, Descricao) VALUES ("${CodEspec}", "${NomeEspec}", "${Descricao}")`;
+  const query = `INSERT INTO Especialidade (CodEspec, NomeEspec, Descricao) VALUES ("${CodEspec}", "${NomeEspec}", "${Descricao}")`;
 
   Connect()
     .then((connection) => {

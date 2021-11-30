@@ -16,7 +16,7 @@ const updateSpecialty = async (
 
   /* const { CodMed } = req.params; */
 
-  const query = `UPDATE especialidade SET ${column} = "${value}" WHERE CodEspec = ${CodEspec}`;
+  const query = `UPDATE Especialidade SET ${column} = "${value}" WHERE CodEspec = ${CodEspec}`;
   const columns = [column];
 
   Connect()
