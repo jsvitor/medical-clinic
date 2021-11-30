@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const MYSQL_HOST = process.env.MYSQL_HOST || "localhost";
-const MYSQL_DATABASE = process.env.MYSQL_DATABASE || "clinica_medica_jsvitor";
+const MYSQL_DATABASE = process.env.MYSQL_DATABASE || "clinica_medica";
 const MYSQL_USER = process.env.MYSQL_HOST || "root";
 const MYSQL_PASS = process.env.MYSQL_HOST || "Qaz123";
 

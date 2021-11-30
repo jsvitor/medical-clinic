@@ -145,7 +145,84 @@ Se for usar o Docker Compose:
 
 ```DELETE``` ```/medico/:codmed```
 
+
 ## Especialidade
+
+### Listar os 10 primeiros registros  de Especialidade
+
+````GET```` ``/specialty``
+
+
+### Criar um registro de Especialidade
+
+```POST``` ``/specialty``
+
+``BODY``
+
+````json
+{
+	"CodEspec":"005410",
+	"NomeEspec": "Oftalmologia",
+	"Descricao": "Epecialidade que cuida da saude dos olhos."
+}
+````
+
+
+### Alterar um registro de Especialidade usando o CodEspec
+
+```PUT``` ``/specialty``
+
+#### Body
+
+```json
+{
+	"CodEspec":"06791",
+	"column": "NomeEspec",
+	"value": "Pediatria1"
+}
+```
+
+
+### Deletar um registro de Especialidade
+
+```DELETE``` ```/specialty```
+
+#### Body
+
+```json
+{
+	"CodEspec":"06791"
+}
+```
+
+
+### 
+
+## 
+
+## Consultas avançadas
+
+### Receber todas as clinicas que trabalham com uma especialidade
+
+````GET```` ``/advancedquery/clinic``
+
+``BODY``
+
+````json
+{
+	"NomeEspec":"Ordontologista",
+}
+````
+
+#### ``Query``
+
+```sql
+SELECT NomeCli, clinica.Endereco, clinica.Telefone, clinica.Email 
+FROM clinica 
+INNER JOIN medico, especialidade, clinicamedico 
+WHERE clinica.CodCli = clinicamedico.CodCli AND medico.CodMed = clinicamedico.CodMed AND medico.CodEspec = especialidade.CodEspec and especialidade.NomeEspec = "${NomeEspec}" 
+GROUP BY NomeCli, NomeEspec;
+```
 
 
 
@@ -176,14 +253,15 @@ Se for usar o Docker Compose:
 - [ ] Protótipo no Figma
 
 ### Web service
-- [ ] CRUD de medico
+- [x] CRUD de medico
 - [ ] CRUD de clinica
-- [ ] CRUD de paciente
+- [x] CRUD de paciente
 - [ ] CRUD de agendaConsulta
 - [ ] CRUD clinicamedico
 
-- [ ] Configuração do ambiente de desenvolvimento
-- [ ] Criar as rotas para médico
-- [ ] Fazer a conexão com o banco de dados mysql
-- [ ] Documentar
+- [x] Configuração do ambiente de desenvolvimento
+- [x] Criar as rotas para médico
+- [x] Fazer a conexão com o banco de dados mysql
+- [x] Documentar
+
 
