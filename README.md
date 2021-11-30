@@ -1,10 +1,15 @@
 # Sistema Web Clínica Médica
 
-> Este sistema foi desenvolvido para posterior submissão avaliativa da disciplina de Introdução ao Armazenamento e Análise de Dados (IAAD) da Universidade Federal Rural de Pernambuco (UFRPE).
+> Sistema desenvolvido como atividade avaliativa da disciplina de Introdução ao Armazenamento e Análise de Dados (IAAD).
+> Bacharelado em Sistemas da informação.
+> Universidade Federal Rural de Pernambuco (UFRPE).
+>
 > O processo de desenvolvimento foi composto lançou mão de ferramentas de organização de projetos, teorias de arquitetura de software e conhecimentos de sistemas de banco de dados.
 
 ## Sobre o projeto
 > Este repositório conta com o script SQL para criação e população do esquema relacional do banco de dados Clínica Médica, assim como o código fonte da API para interação com o banco de dados
+
+### Colaboradores
 
 ### Ferramentas usadas
 * VSCODE
@@ -88,7 +93,7 @@ Se for usar o Docker Compose:
 		`yarn install`
 	* Com as dependências instaladas, execute:
 		`yarn dev`
-	Agora você tem a API Rest funcionando no endereço `http://localhost:3333`
+		Agora você tem a API Rest funcionando no endereço `http://localhost:3333`
 
 4. Agora chegou a hora de inicializar a interface web, para tal execute o comando: 
 	* xxxxxxxxxxxx
@@ -100,99 +105,7 @@ Se for usar o Docker Compose:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-OLD VERSION
-***
-
-
-
-# Clínica Médica
-
-## Estrutura dos diretórios
-
-      .
-      ├── rest-service
-      │   ├── src
-      │   │    ├── config
-      │   │    ├── controllers
-      │   │    ├── doctorControllers
-      │   │    |   ├── ...
-      │   │    |   └── index.ts
-      │   │    ├── routes          # rotas da aplicação
-      │   │    │   ├── doctor.routes.ts
-      │   │    │   ├── ...
-      │   │    │   └── index.ts
-      |   │    └── server.ts
-      │   ├── .editorconfig
-      │   ├── .eslintignore
-      │   ├── .eslintrc.json
-      │   ├── .gitattributes
-      │   ├── .gitignore
-      │   ├── README.md
-      │   ├── .package.json
-      │   ├── tsconfig.json
-      │   └── yarn.lock
-      │
-      ├── web-interface             # SPA interface
-      │   ├── index.ts
-      │   ├── README.MD             # Getting started guide
-      │   ├── src             
-      │   └── ...                 
-      └── ...
-
-
-### Modelo Entidade Relacionamento Estendido | MySQL
-![esquema clínica médica](https://raw.githubusercontent.com/jsvitor/iaad-bsi-ufrpe/main/semana%2005-06/clinica_medica_diagram.png)
-
-
-## Funcionalidades da aplicação
-- [ ] A escolha da linguagem de programação é livre (python, dart, java, php, javascript, entre outras), mas o BD deve ser o MySQL.
-
-- [ ] O sistema deve contemplar as quatro operações básicas de CRUD (Create, Read, Update e Delete).
-
-- [ ] Incluir no sistema pelo menos um trigger e um stored procedure. 
-
-- [ ] Incluir no sistema no mínimo duas consultas, envolvendo junções, funções de agregação e agrupamentos. 
-
-- [ ] O banco de dados deve estar populado.
-
-- [ ] O sistema deve dispor de interface gráfica, seja web, mobile ou desktop.
-
-
-## Tarefas
-
-### Gravar o vídeo mostrando o funcionamento da aplicação
-
-### Interface
-- [ ] Protótipo no Figma
-
-### Web service
-- [ ] CRUD de medico
-- [ ] CRUD de clinica
-- [ ] CRUD de paciente
-- [ ] CRUD de agendaConsulta
-- [ ] CRUD clinicamedico
-
-- [ ] Configuração do ambiente de desenvolvimento
-- [ ] Criar as rotas para médico
-- [ ] Fazer a conexão com o banco de dados mysql
-- [ ] Documentar
-
+# Como usar a API
 
 ## Medico
 
@@ -234,6 +147,7 @@ OLD VERSION
 ### Deletar um registro de Médico
 
 ```DELETE``` ```/medico/:codmed```
+
 
 ## Especialidade
 
@@ -315,6 +229,127 @@ GROUP BY NomeCli, NomeEspec;
 
 
 
+## Triggers and Stored Procedures
 
-## 
+### Trigger : Ao deletar uma especialidade, todos médicos que a referenciam também são deletados
 
+``BODY``
+
+````sql
+DELETE FROM Especialidade WHERE Especialidade.CodEspec = "1"
+````
+
+#### ``Query``
+
+```sql
+CREATE TRIGGER deleteEspec
+AFTER DELETE
+ON Especialidade
+FOR EACH ROW
+	DELETE FROM Medico 
+WHERE codEspec = OLD.CodEspec;
+```
+
+
+
+### Trigger :  Ao atualizar  a coluna CodEspec de uma especialidade, a mesma coluna de todos os médicos que a referenciam também é atualizada
+
+``BODY``
+
+````sql
+UPDATE Especialidade SET CodEspec = "22" WHERE CodEspec = "1"
+````
+
+#### ``Query``
+
+```sql
+CREATE TRIGGER updateEspec
+AFTER UPDATE
+ON Especialidade
+FOR EACH ROW 
+	UPDATE Medico SET Medico.CodEspec = NEW.CodEspec
+WHERE Medico.CodEspec = OLD.CodEspec ;
+```
+
+
+
+### Procedure :  Realiza a busca dos dados de cada clina em que um médico trabalha a partir do seu nome
+
+``BODY``
+
+````sql
+CALL Pc_buscaEndereco("NomeMed");
+````
+
+#### ``Query``
+
+```sql
+CREATE PROCEDURE Pc_buscaEndereco
+(NomeMedico varchar(15))
+	SELECT NomeMed, Email, Telefone, Endereco
+    FROM Medico
+    INNER JOIN clinicamedico, clinica
+	WHERE Medico.CodMed = clinicamedico.CodMed 
+    AND Clinica.CodCli = clinicamedica.CodCli AND NomeMedico = Medico.NomeMed;
+```
+
+
+
+### Procedure :  Retorna todas as médicas  junto das suas especialidades
+
+``BODY``
+
+````sql
+CALL Pc_médicas();
+````
+
+#### ``Query``
+
+```sql
+CREATE PROCEDURE Pc_médicas
+()
+	SELECT NomeMed, Email, Telefone, NomeEspec
+    FROM Medico
+    INNER JOIN Especialidade
+	WHERE Medico.CodEspec = Especialidade.CodEspec;
+```
+
+
+
+
+
+
+
+
+## Requisitos da aplicação
+- [ ] A escolha da linguagem de programação é livre (python, dart, java, php, javascript, entre outras), mas o BD deve ser o MySQL.
+
+- [ ] O sistema deve contemplar as quatro operações básicas de CRUD (Create, Read, Update e Delete).
+
+- [ ] Incluir no sistema pelo menos um trigger e um stored procedure. 
+
+- [ ] Incluir no sistema no mínimo duas consultas, envolvendo junções, funções de agregação e agrupamentos. 
+
+- [ ] O banco de dados deve estar populado.
+
+- [ ] O sistema deve dispor de interface gráfica, seja web, mobile ou desktop.
+
+
+## Tarefas
+
+### Gravar o vídeo mostrando o funcionamento da aplicação
+
+### Interface
+- [ ] Protótipo no Figma
+
+### Web service
+- [x] CRUD de medico
+- [ ] CRUD de clinica
+- [x] CRUD de paciente
+- [ ] CRUD de agendaConsulta
+- [ ] CRUD clinicamedico
+
+- [x] Configuração do ambiente de desenvolvimento
+- [x] Criar as rotas para médico
+- [x] Fazer a conexão com o banco de dados mysql
+- [x] Documentar

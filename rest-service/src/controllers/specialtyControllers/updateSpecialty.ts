@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import logging from "../../config/logging";
-import { Connect, Update } from "../../config/mysql";
+import { Connect, Query } from "../../config/mysql";
 
 const NAMESPACE = "specialty";
 
@@ -12,16 +12,40 @@ const updateSpecialty = async (
 ) => {
   logging.info(NAMESPACE, "Updtating specialty.");
 
-  const { CodEspec, column, value } = req.body;
+  interface ISpecialty {
+    NomeEspec?: string;
+    Descricao?: string;
+  }
 
-  /* const { CodMed } = req.params; */
+  const { name, description } = req.body;
 
-  const query = `UPDATE especialidade SET ${column} = "${value}" WHERE CodEspec = ${CodEspec}`;
-  const columns = [column];
+  const { codespec } = req.headers;
+
+  // alterar apenas os dados informados no corpo da requisição
+  const values: ISpecialty = {
+    NomeEspec: name,
+    Descricao: description,
+  };
+
+  let query = `UPDATE Especialidade SET `.toString();
+  console.log(query);
+
+  let update = "";
+
+  Object.entries(values).forEach((item) => {
+    if (item[1] !== undefined && item[0] !== "Descricao") {
+      console.log(item);
+      update += `${item[0]} = "${item[1]}" `;
+    } else if (item[0] === "Descricao" && item[1] !== undefined) {
+      update += `, ${item[0]} = "${item[1]}" `;
+    }
+  });
+
+  query += `${update} WHERE CodEspec = ${codespec}`;
 
   Connect()
     .then((connection) => {
-      Update(connection, query, columns)
+      Query(connection, query)
         .then((result) => {
           logging.info(NAMESPACE, "Specialty updated: ", result);
 
@@ -51,5 +75,4 @@ const updateSpecialty = async (
       });
     });
 };
-
 export { updateSpecialty };

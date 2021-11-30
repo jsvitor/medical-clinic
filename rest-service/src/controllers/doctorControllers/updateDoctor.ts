@@ -39,15 +39,17 @@ const updateDoctor = async (
   let update = "";
 
   Object.entries(values).forEach((item) => {
-    if (item[1] !== undefined && item[0] !== "CodEspec") {
+    if (item[1] !== undefined && item[0] === "NomeMed") {
       console.log(item);
-      update += `${item[0]} = "${item[1]}", `;
-    } else if (item[1] !== undefined && item[0] === "CodEspec") {
-      update += `${item[0]} = ${item[1]} `;
+      update += `${item[0]} = "${item[1]}" `;
+    } else if (item[1] !== undefined && update === "") {
+      update += ` ${item[0]} = "${item[1]}" `;
+    } else if (item[1] !== undefined) {
+      update += `, ${item[0]} = "${item[1]}" `;
     }
   });
 
-  query += `${update} WHERE CodMed = ${codmed}`;
+  query += `${update} WHERE CodMed = "${codmed}"`;
 
   Connect()
     .then((connection) => {
