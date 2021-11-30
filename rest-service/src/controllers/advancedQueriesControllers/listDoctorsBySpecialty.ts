@@ -5,16 +5,17 @@ import { Connect, Query } from "../../config/mysql";
 
 const NAMESPACE = "doctor";
 
-const listClinicBySpecialty = async (
+const listDoctorsBySpecialty = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  logging.info(NAMESPACE, "Listing every clinic wich have this specialty");
+  logging.info(NAMESPACE, "Listing every doctor wich have this specialty");
 
-  const { NomeEspec } = req.body;
+  const { nomeEspec } = req.params;
+  console.log(nomeEspec);
 
-  const query = `SELECT NomeCli, clinica.Endereco, clinica.Telefone, clinica.Email FROM clinica INNER JOIN medico, especialidade, clinicamedico WHERE clinica.CodCli = clinicamedico.CodCli and medico.CodMed = clinicamedico.CodMed AND medico.CodEspec = especialidade.CodEspec and especialidade.NomeEspec = "${NomeEspec}" group by NomeCli, NomeEspec;`;
+  const query = `SELECT Medico.NomeMed, Medico.Genero, Medico.Email FROM Medico INNER JOIN Especialidade USING(CodEspec) WHERE Especialidade.NomeEspec = "${nomeEspec}";`;
 
   Connect()
     .then((connection) => {
@@ -22,7 +23,7 @@ const listClinicBySpecialty = async (
         .then((result) => {
           logging.info(
             NAMESPACE,
-            "Every clinic wich have this specialty: ",
+            "Every doctor wich have this specialty: ",
             result
           );
 
@@ -53,4 +54,4 @@ const listClinicBySpecialty = async (
     });
 };
 
-export { listClinicBySpecialty };
+export { listDoctorsBySpecialty };

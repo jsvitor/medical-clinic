@@ -1,4 +1,4 @@
 import { listClinicBySpecialty } from "./listClinicBySpecialty";
+import { listDoctorsBySpecialty } from "./listDoctorsBySpecialty";
 
-
-export default { listClinicBySpecialty };
+export default { listClinicBySpecialty, listDoctorsBySpecialty };
