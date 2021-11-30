@@ -54,4 +54,5 @@ const listDoctorsBySpecialty = async (
     });
 };
 
+
 export { listDoctorsBySpecialty };

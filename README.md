@@ -3,7 +3,7 @@
 > Sistema desenvolvido como atividade avaliativa da disciplina de Introdução ao Armazenamento e Análise de Dados (IAAD).
 > Bacharelado em Sistemas da informação.
 > Universidade Federal Rural de Pernambuco (UFRPE).
-> 
+
 > O processo de desenvolvimento foi composto lançou mão de ferramentas de organização de projetos, teorias de arquitetura de software e conhecimentos de sistemas de banco de dados.
 
 ## Sobre o projeto
@@ -93,7 +93,7 @@ Se for usar o Docker Compose:
 		`yarn install`
 	* Com as dependências instaladas, execute:
 		`yarn dev`
-	Agora você tem a API Rest funcionando no endereço `http://localhost:3333`
+		Agora você tem a API Rest funcionando no endereço `http://localhost:3333`
 
 4. Agora chegou a hora de inicializar a interface web, para tal execute o comando: 
 	* xxxxxxxxxxxx
@@ -229,6 +229,91 @@ GROUP BY NomeCli, NomeEspec;
 
 
 
+## Triggers and Stored Procedures
+
+
+### Trigger : Ao deletar uma especialidade, todos médicos que a referenciam também são deletados
+
+``BODY``
+
+````sql
+DELETE FROM Especialidade WHERE Especialidade.CodEspec = "1"
+````
+
+#### ``Query``
+
+```sql
+CREATE TRIGGER deleteEspec
+AFTER DELETE
+ON Especialidade
+FOR EACH ROW
+	DELETE FROM Medico 
+WHERE codEspec = OLD.CodEspec;
+```
+
+
+
+### Trigger :  Ao atualizar  a coluna CodEspec de uma especialidade, a mesma coluna de todos os médicos que a referenciam também é atualizada
+
+``BODY``
+
+````sql
+UPDATE Especialidade SET CodEspec = "22" WHERE CodEspec = "1"
+````
+
+#### ``Query``
+
+```sql
+CREATE TRIGGER updateEspec
+AFTER UPDATE
+ON Especialidade
+FOR EACH ROW 
+	UPDATE Medico SET Medico.CodEspec = NEW.CodEspec
+WHERE Medico.CodEspec = OLD.CodEspec ;
+```
+
+
+
+### Procedure :  Realiza a busca dos dados de cada clina em que um médico trabalha a partir do seu nome
+
+``BODY``
+
+````sql
+CALL Pc_buscaEndereco("NomeMed");
+````
+
+#### ``Query``
+
+```sql
+CREATE PROCEDURE Pc_buscaEndereco
+(NomeMedico varchar(15))
+	SELECT NomeMed, Email, Telefone, Endereco
+    FROM Medico
+    INNER JOIN clinicamedico, clinica
+	WHERE Medico.CodMed = clinicamedico.CodMed 
+    AND Clinica.CodCli = clinicamedica.CodCli AND NomeMedico = Medico.NomeMed;
+```
+
+
+
+### Procedure :  Retorna todas as médicas  junto das suas especialidades
+
+``BODY``
+
+````sql
+CALL Pc_médicas();
+````
+
+#### ``Query``
+
+```sql
+CREATE PROCEDURE Pc_médicas
+()
+	SELECT NomeMed, Email, Telefone, NomeEspec
+    FROM Medico
+    INNER JOIN Especialidade
+	WHERE Medico.CodEspec = Especialidade.CodEspec;
+```
 
 
 
@@ -266,5 +351,3 @@ GROUP BY NomeCli, NomeEspec;
 - [x] Criar as rotas para médico
 - [x] Fazer a conexão com o banco de dados mysql
 - [x] Documentar
-
-
