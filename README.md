@@ -147,3 +147,32 @@
 
 ## 
 
+## Consultas avançadas
+
+### Receber todas as clinicas que trabalham com uma especialidade
+
+````GET```` ``/advancedquery/clinic``
+
+``BODY``
+
+````json
+{
+	"NomeEspec":"Ordontologista",
+}
+````
+
+#### ``Query``
+
+```sql
+SELECT NomeCli, clinica.Endereco, clinica.Telefone, clinica.Email 
+FROM clinica 
+INNER JOIN medico, especialidade, clinicamedico 
+WHERE clinica.CodCli = clinicamedico.CodCli AND medico.CodMed = clinicamedico.CodMed AND medico.CodEspec = especialidade.CodEspec and especialidade.NomeEspec = "${NomeEspec}" 
+GROUP BY NomeCli, NomeEspec;
+```
+
+
+
+
+## 
+

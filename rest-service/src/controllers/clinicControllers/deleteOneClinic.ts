@@ -14,7 +14,7 @@ const deleteOneClinic = async (
 
   const { CodCli } = req.body;
 
-  const query = `DELETE FROM clinicas WHERE CodCli = ${CodCli}`;
+  const query = `DELETE FROM clinica WHERE CodCli = ${CodCli}`;
 
   Connect()
     .then((connection) => {

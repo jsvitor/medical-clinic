@@ -3,25 +3,27 @@ import { NextFunction, Request, Response } from "express";
 import logging from "../../config/logging";
 import { Connect, Query } from "../../config/mysql";
 
-const NAMESPACE = "clinic";
+const NAMESPACE = "doctor";
 
-const listAllClinics = async (
+const listClinicBySpecialty = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  logging.info(NAMESPACE, "Getting all clinics.");
+  logging.info(NAMESPACE, "Listing every clinic wich have this specialty");
 
-  const query = "SELECT * FROM clinica";
+  const { NomeEspec } = req.body;
+
+  const query = `SELECT NomeCli, clinica.Endereco, clinica.Telefone, clinica.Email FROM clinica INNER JOIN medico, especialidade, clinicamedico WHERE clinica.CodCli = clinicamedico.CodCli and medico.CodMed = clinicamedico.CodMed AND medico.CodEspec = especialidade.CodEspec and especialidade.NomeEspec = "${NomeEspec}" group by NomeCli, NomeEspec;`;
 
   Connect()
     .then((connection) => {
       Query(connection, query)
-        .then((results) => {
-          logging.info(NAMESPACE, "Retrieved clinics: ", results);
+        .then((result) => {
+          logging.info(NAMESPACE, "Every clinic wich have this specialty: ", result);
 
           return res.status(200).json({
-            results,
+            result,
           });
         })
         .catch((error) => {
@@ -47,4 +49,4 @@ const listAllClinics = async (
     });
 };
 
-export { listAllClinics };
+export { listClinicBySpecialty };
