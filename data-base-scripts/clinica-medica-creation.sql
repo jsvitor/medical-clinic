@@ -73,3 +73,46 @@ alter table AgendaConsulta add foreign key(CpfPaciente) references Paciente(CpfP
 -- adicionando um valor defalt à carga horária semanal
 -- alter table ClinicaMedico alter CargaHorariaSemanal on update 20 ; -- my sql não suporta
 
+-- Criação dos Triggers --
+-- Após a remoção de uma especialidade, todos os médicos que a usam são excluidos também
+CREATE TRIGGER deleteEspec
+AFTER DELETE
+ON Especialidade
+FOR EACH ROW
+	DELETE FROM Medico 
+WHERE codEspec = OLD.CodEspec;
+
+-- Após atualizar o codEspec de alguma espcialidade, ele também é atualizado na tabela dos médicos
+CREATE TRIGGER updateEspec
+AFTER UPDATE
+ON Especialidade
+FOR EACH ROW 
+	UPDATE Medico SET Medico.CodEspec = NEW.CodEspec
+WHERE Medico.CodEspec = OLD.CodEspec ;
+
+-- Criação das Stored Procedures
+
+-- Busca o endereço e as informações da clinica apartir do nome do médico
+CREATE PROCEDURE Pc_buscaEndereco
+(NomeMedico varchar(15))
+	SELECT NomeMed, Email, Telefone, Endereco
+    FROM Medico
+    INNER JOIN clinicamedico, clinica
+	WHERE Medico.CodMed = clinicamedico.CodMed 
+    AND Clinica.CodCli = clinicamedica.CodCli AND NomeMedico = Medico.NomeMed;
+    
+-- Retorna apenas médicas do sexo feminino
+
+CREATE PROCEDURE Pc_médicas
+()
+	SELECT NomeMed, Email, Telefone, NomeEspec
+    FROM Medico
+    INNER JOIN Especialidade
+	WHERE Medico.CodEspec = Especialidade.CodEspec;
+    
+
+
+
+
+
+
