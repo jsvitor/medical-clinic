@@ -31,7 +31,7 @@
 * ...
 
 #### Para execução da interface Web
-* 
+* Angular xx
 
 Se for usar o Docker Compose:
 * Docker Engine XXX
@@ -95,7 +95,7 @@ Se for usar o Docker Compose:
 	Agora você tem a API Rest funcionando no endereço `http://localhost:3333`
 
 4. Agora chegou a hora de inicializar a interface web, para tal execute o comando: 
-	* xxxxxxxxxxxx
+	* npm start 
 		``
 	* xxxxxxxxxxxx
 		``
