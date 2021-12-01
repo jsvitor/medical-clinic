@@ -16,7 +16,6 @@
 * 
 
 ### Arquitetura
-> Colocar um diagrama da arquitetura: MySQl → Web-Service→ Interface Web → Dispositivos do Usuário
 ![alt text](https://i.imgur.com/cGqqC1k.png)
 ## Como usar esse projeto
 
