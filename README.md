@@ -252,7 +252,7 @@ GROUP BY NomeCli, NomeEspec;
 ### Gravar o vídeo mostrando o funcionamento da aplicação
 
 ### Interface
-- [ ] Protótipo no Figma
+- [x] Protótipo no Figma
 
 ### Web service
 - [x] CRUD de medico
